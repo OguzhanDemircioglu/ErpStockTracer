@@ -20,7 +20,7 @@ export class HttpService {
       }
     }).subscribe({
       next: (res) => {
-        if(res.data){
+        if (res.data) {
           callBack(res.data);
         }
       },
