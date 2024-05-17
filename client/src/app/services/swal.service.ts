@@ -13,7 +13,7 @@ export class SwalService {
     Swal.fire({
       title: title,
       text: "",
-      timer: 1000,
+      timer: 3000,
       showConfirmButton: false,
       toast: true,
       position: "top-right",
