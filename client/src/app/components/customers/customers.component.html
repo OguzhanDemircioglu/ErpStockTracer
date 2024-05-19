@@ -2,7 +2,7 @@
   <app-section sectionTitle="Müşteri Listesi">
     <div class="form-group row">
       <div class="col-9">
-        <button class="btn btn-dark">
+        <button class="btn btn-dark" data-toggle="modal" data-target="#createModal">
           <i class="fa-solid fa-plus me-1"></i>
           Müşteri Ekle
         </button>
@@ -52,3 +52,51 @@
     </div>
   </app-section>
 </app-blank>
+
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Müşteri Ekle</h5>
+        <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal" aria-label="Close">
+          <span >&times;</span>
+        </button>
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label>Müşteri Adı</label>
+            <input type="text" class="form-control" name="name">
+          </div>
+          <div class="form-group mt-2">
+            <label>Vergi Dairesi</label>
+            <input type="text" class="form-control" name="taxDepartment">
+          </div>
+          <div class="form-group mt-2">
+            <label>Vergi Numarası</label>
+            <input type="text" class="form-control" name="taxNumber" maxlength="11">
+          </div>
+
+          <div class="form-group">
+            <label>Şehir</label>
+            <input type="text" class="form-control" name="city">
+          </div>
+          <div class="form-group mt-2">
+            <label>İlçe</label>
+            <input type="text" class="form-control" name="town">
+          </div>
+          <div class="form-group mt-2">
+            <label>Adres</label>
+            <textarea type="text" class="form-control" name="fullAddress" rows="5"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-dark">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
