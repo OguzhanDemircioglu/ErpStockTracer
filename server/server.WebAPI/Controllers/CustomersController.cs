@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using server.Application.Features.Customers.CreateCustomer;
+using server.Application.Features.Customers.DeleteCustomer;
 using server.Application.Features.Customers.GetAllCustomer;
 using server.WebAPI.Abstractions;
 
@@ -22,6 +23,14 @@ public sealed class CustomersController : ApiController
     
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerCommand request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(request, cancellationToken);
+        
+        return StatusCode(response.StatusCode, response);
+    }    
+    
+    [HttpPost]
+    public async Task<IActionResult> DeleteById(DeleteCustomerByIdCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
         
