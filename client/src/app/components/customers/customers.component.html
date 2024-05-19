@@ -3,7 +3,7 @@
     <div class="form-group row">
       <div class="col-9">
         <button class="btn btn-dark" data-toggle="modal" data-target="#createModal">
-          <i class="fa-solid fa-plus me-1"></i>
+          <i class="fa-solid fa-plus"></i>
           Müşteri Ekle
         </button>
       </div>
@@ -58,39 +58,59 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Müşteri Ekle</h5>
-        <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal" aria-label="Close">
-          <span >&times;</span>
+        <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
         </button>
       </div>
-      <form #createForm="ngForm" (ngSubmit)="create(createForm)">
+
+      <form formValidate #createForm="ngForm" (ngSubmit)="create(createForm)">
         <div class="modal-body">
-
-          <div class="form-group">
+          <div class="form-group row">
             <label>Müşteri Adı</label>
-            <input type="text" class="form-control" name="name">
-          </div>
-          <div class="form-group mt-2">
-            <label>Vergi Dairesi</label>
-            <input type="text" class="form-control" name="taxDepartment">
-          </div>
-          <div class="form-group mt-2">
-            <label>Vergi Numarası</label>
-            <input type="text" class="form-control" name="taxNumber" maxlength="11">
+            <input type="text" class="form-control" name="name" minlength="3" required>
+            <div class="invalid-feedback"></div>
           </div>
 
-          <div class="form-group">
-            <label>Şehir</label>
-            <input type="text" class="form-control" name="city">
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Vergi Dairesi</label>
+                <input type="text" class="form-control" name="taxDepartment" minlength="3" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>Vergi Numarası</label>
+                <input type="text" class="form-control" name="taxNumber" maxlength="11" minlength="3" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
           </div>
-          <div class="form-group mt-2">
-            <label>İlçe</label>
-            <input type="text" class="form-control" name="town">
+
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Şehir</label>
+                <input type="text" class="form-control" name="city" minlength="3" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>İlçe</label>
+                <input type="text" class="form-control" name="town" minlength="3" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
           </div>
+
           <div class="form-group mt-2">
             <label>Adres</label>
-            <textarea type="text" class="form-control" name="fullAddress" rows="5"></textarea>
+            <textarea type="text" class="form-control" name="fullAddress" rows="5" minlength="3" required></textarea>
+            <div class="invalid-feedback"></div>
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
