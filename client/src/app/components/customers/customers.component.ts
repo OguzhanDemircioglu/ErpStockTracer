@@ -31,7 +31,7 @@ export class CustomersComponent implements OnInit{
   }
 
   getAll() {
-    this.http.post<CustomerModel[]>("Customer/GetAll", {},(res)=> {
+    this.http.post<CustomerModel[]>("Customers/GetAll", {},(res)=> {
       this.customers = res
     })
   }
