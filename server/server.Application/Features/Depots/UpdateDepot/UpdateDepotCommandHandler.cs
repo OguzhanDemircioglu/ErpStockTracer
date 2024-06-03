@@ -14,7 +14,7 @@ public class UpdateDepotCommandHandler(
 {
     public async Task<Result<string>> Handle(UpdateDepotCommand request, CancellationToken cancellationToken)
     {
-        Depot depot = await depotRepository.GetByExpressionWithTrackingAsync(p=> p.Id.Equals(request.Guid), 
+        Depot depot = await depotRepository.GetByExpressionWithTrackingAsync(p=> !p.Id.Equals(request.Guid), 
             cancellationToken);
 
         if (depot is null)

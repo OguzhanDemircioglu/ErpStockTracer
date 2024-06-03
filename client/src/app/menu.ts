@@ -26,7 +26,14 @@ export const Menus: MenuModel[] = [
         url: "/customers",
         isTitle: false,
         subMenus: []
-      }
+      },
+      {
+        name: "Depot",
+        icon: "far fa-solid fa-depots",
+        url: "/Depots",
+        isTitle: false,
+        subMenus: []
+      },
     ]
   }
 ]
