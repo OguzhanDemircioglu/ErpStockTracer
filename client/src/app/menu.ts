@@ -29,7 +29,7 @@ export const Menus: MenuModel[] = [
       },
       {
         name: "Depot",
-        icon: "far fa-solid fa-depots",
+        icon: "far fa-solid fa-warehouse",
         url: "/Depots",
         isTitle: false,
         subMenus: []

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace server.Infrastructure.Context;
 
-internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
+public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
@@ -14,6 +14,7 @@ internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, Identity
 
     public DbSet<Customer> Customers { get; init; }
     public DbSet<Depot> Depots { get; init; }
+    public DbSet<Product> Product { get; init; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
