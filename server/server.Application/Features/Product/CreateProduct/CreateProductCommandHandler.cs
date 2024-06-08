@@ -2,17 +2,18 @@
 using GenericRepository;
 using MediatR;
 using server.Application.Features.Depots.CreateDepot;
+using server.Domain.Entities;
 using server.Domain.Repositories;
 using TS.Result;
 
 namespace server.Application.Features.Product.CreateProduct;
 
-internal sealed class CreateProductCommandHandler(
+public class CreateProductCommandHandler(
     IProductRespository respository,
     IUnitOfWork unitOfWork,
-    IMapper mapper) : IRequestHandler<CreateDepotCommand, Result<string>>
+    IMapper mapper) : IRequestHandler<CreateProductCommand, Result<string>>
 {
-    public async Task<Result<string>> Handle(CreateDepotCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         bool isExist = await respository.AnyAsync(p=>p.Name.Equals(request.Name),
             cancellationToken);

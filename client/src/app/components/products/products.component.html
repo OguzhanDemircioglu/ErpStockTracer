@@ -1,10 +1,10 @@
-<app-blank pageName="Depo" [routes]="['Depots']">
-  <app-section sectionTitle="Depo Listesi">
+<app-blank pageName="Ürün" [routes]="['Products']">
+  <app-section sectionTitle="Ürün Listesi">
     <div class="form-group row">
       <div class="col-9">
         <button class="btn btn-dark" data-toggle="modal" data-target="#createModal">
           <i class="fa-solid fa-plus"></i>
-          Depo Ekle
+          Ürün Ekle
         </button>
       </div>
       <div class="col-3">
@@ -16,21 +16,17 @@
         <thead>
         <tr>
           <th>#</th>
-          <th>Depo Adı</th>
-          <th>Şehir</th>
-          <th>İlçe</th>
-          <th>Açık Adres</th>
+          <th>Ürün Adı</th>
+          <th>Ürün Tipi</th>
           <th>İşlemler</th>
         </tr>
         </thead>
         <tbody>
-          @for (customer of depots | depot:search; track customer) {
+          @for (customer of products | product:search; track customer) {
             <tr>
               <td>{{ $index + 1 }}</td>
               <td>{{ customer.name }}</td>
-              <td>{{ customer.city }}</td>
-              <td>{{ customer.town }}</td>
-              <td>{{ customer.fullAdress }}</td>
+              <td>{{ customer.type.name }}</td>
               <td>
                 <button data-toggle="modal" data-target="#updateModal" (click)="get(customer)"
                         class="btn btn-outline-primary btn-sm me-2">
@@ -51,7 +47,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Depo Ekle</h5>
+        <h5 class="modal-title">Ürün Ekle</h5>
         <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
                 aria-label="Close">
           <span>&times;</span>
@@ -60,7 +56,7 @@
       <form formValidate #createForm="ngForm" (ngSubmit)="create(createForm)">
         <div class="modal-body">
           <div class="form-group row">
-            <label>Depo Adı</label>
+            <label>Ürün Adı</label>
             <input type="text"
                    class="form-control"
                    name="name"
@@ -71,36 +67,16 @@
           <div class="form-group mt-2 row">
             <div class="col-6">
               <div class="form-group">
-                <label>Şehir</label>
-                <input type="text"
-                       class="form-control"
-                       name="city"
-                       [(ngModel)]="createModel.city"
-                       minlength="2" required>
+                <label>Ürün Tipi</label>
+                <select class="form-select"
+                        name="createType"
+                        [(ngModel)]="createModel.typeValue"
+                        required>
+                  <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
+                </select>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
-            <div class="col-6">
-              <div class="form-group">
-                <label>İlçe</label>
-                <input type="text"
-                       class="form-control"
-                       name="town"
-                       [(ngModel)]="createModel.town"
-                       minlength="2" required>
-                <div class="invalid-feedback"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group mt-2">
-            <label>Adres</label>
-            <textarea type="text"
-                      class="form-control"
-                      name="fullAddress"
-                      [(ngModel)]="createModel.fullAdress"
-                      rows="5"
-                      required></textarea>
-            <div class="invalid-feedback"></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -108,7 +84,6 @@
           <button type="submit" class="btn btn-dark">Kaydet</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
@@ -116,7 +91,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Depo Güncelle</h5>
+        <h5 class="modal-title">Ürün Güncelle</h5>
         <button type="button" #updateModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
                 aria-label="Close">
           <span>&times;</span>
@@ -125,7 +100,7 @@
       <form formValidate #updateForm="ngForm" (ngSubmit)="update(updateForm)">
         <div class="modal-body">
           <div class="form-group row">
-            <label>Depo Adı</label>
+            <label>Ürün Adı</label>
             <input type="text"
                    class="form-control"
                    name="updatename"
@@ -137,35 +112,16 @@
             <div class="col-6">
               <div class="form-group">
                 <label>Şehir</label>
-                <input type="text"
-                       class="form-control"
-                       name="updatecity"
-                       [(ngModel)]="updateModel.city"
-                       minlength="2" required>
+                <label>Ürün Tipi</label>
+                <select class="form-select"
+                        name="updateType"
+                        [(ngModel)]="updateModel.typeValue"
+                        required>
+                  <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
+                </select>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
-            <div class="col-6">
-              <div class="form-group">
-                <label>İlçe</label>
-                <input type="text"
-                       class="form-control"
-                       name="updatetown"
-                       [(ngModel)]="updateModel.town"
-                       minlength="2" required>
-                <div class="invalid-feedback"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group mt-2">
-            <label>Adres</label>
-            <textarea type="text"
-                      class="form-control"
-                      name="updatefullAddress"
-                      [(ngModel)]="updateModel.fullAdress"
-                      rows="5"
-                      required></textarea>
-            <div class="invalid-feedback"></div>
           </div>
         </div>
         <div class="modal-footer">

@@ -8,13 +8,13 @@ using TS.Result;
 namespace server.Application.Features.Depots.CreateDepot;
 
 public class CreateDepotCommandHandler(
-    IDepotRepository depotRepository,
+    IDepotRepository repository,
     IUnitOfWork unitOfWork,
     IMapper mapper) : IRequestHandler<CreateDepotCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(CreateDepotCommand request, CancellationToken cancellationToken)
     {
-        bool isExist = await depotRepository.AnyAsync(p=>p.Name.Equals(request.Name),
+        bool isExist = await repository.AnyAsync(p=>p.Name.Equals(request.Name),
             cancellationToken);
 
         if (isExist)
@@ -24,7 +24,7 @@ public class CreateDepotCommandHandler(
         
         Depot depot = mapper.Map<Depot>(request);
 
-        await depotRepository.AddAsync(depot, cancellationToken);
+        await repository.AddAsync(depot, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return "Depo Başarıyla Eklendi";

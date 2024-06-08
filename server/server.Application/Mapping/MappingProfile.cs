@@ -4,7 +4,9 @@ using server.Application.Features.Customers.UpdateCustomer;
 using server.Application.Features.Depots.CreateDepot;
 using server.Application.Features.Depots.UpdateDepot;
 using server.Application.Features.Product.CreateProduct;
+using server.Application.Features.Product.UpdateProduct;
 using server.Domain.Entities;
+using server.Domain.Enums;
 
 namespace server.Application.Mapping;
 
@@ -19,8 +21,10 @@ public sealed class MappingProfile : Profile
         CreateMap<UpdateDepotCommand, Depot>();
 
         CreateMap<CreateProductCommand, Product>()
-            .ForMember(m => m.Type, opt => opt.MapFrom(x => x.TypeValue));
+            .ForMember(m => m.Type, opt => opt.MapFrom(x => ProductTypeEnum.FromValue(x.TypeValue)));
             
-        CreateMap<UpdateDepotCommand, Depot>();
+        CreateMap<UpdateProductCommand, Product>()
+            .ForMember(m => m.Type, opt => opt.MapFrom(x => ProductTypeEnum.FromValue(x.TypeValue)));
+            
     }
 }

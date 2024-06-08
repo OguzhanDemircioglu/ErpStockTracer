@@ -20,9 +20,4 @@
         <ProjectReference Include="..\server.Domain\server.Domain.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Product\DeleteProduct\" />
-      <Folder Include="Features\Product\UpdateProduct\" />
-    </ItemGroup>
-
 </Project>
