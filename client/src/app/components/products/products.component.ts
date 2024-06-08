@@ -52,13 +52,13 @@ export class ProductsComponent implements OnInit {
 
   create(form: NgForm) {
     if (form.valid) {
-      this.createModel.typeValue = this.createModel.type.value;
       this.http.post<string>("Products/Create", this.createModel, (res) => {
         this.swal.callToast(res);
         this.createModel = new ProductModel();
         this.createModalCloseBtn?.nativeElement.click();
         this.getAll();
       });
+      form.reset();
     }
   }
 

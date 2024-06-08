@@ -7,7 +7,7 @@ using server.WebAPI.Abstractions;
 
 namespace server.WebAPI.Controllers;
 
-public sealed class RecipeController(IMediator mediator) : ApiController(mediator)
+public sealed class RecipesController(IMediator mediator) : ApiController(mediator)
 {
     [HttpPost]
     public async Task<IActionResult> GetAll(GetAllRecipeQuery request, CancellationToken cancellationToken)

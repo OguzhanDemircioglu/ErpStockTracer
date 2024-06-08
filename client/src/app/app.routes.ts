@@ -7,6 +7,7 @@ import {AuthService} from "./services/auth.service";
 import {CustomersComponent} from "./components/customers/customers.component";
 import {DepotsComponent} from "./components/depots/depots.component";
 import {ProductsComponent} from "./components/products/products.component";
+import {RecipesComponent} from "./components/recipes/recipes.component";
 
 export const routes: Routes = [
   {
@@ -30,6 +31,9 @@ export const routes: Routes = [
       },{
         path:"Products",
         component:ProductsComponent
+      },{
+        path:"Recipes",
+        component:RecipesComponent
       },
     ]
   }
