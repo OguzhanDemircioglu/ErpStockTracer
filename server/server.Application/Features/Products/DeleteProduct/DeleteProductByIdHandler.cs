@@ -1,9 +1,10 @@
 ﻿using GenericRepository;
 using MediatR;
+using server.Domain.Entities;
 using server.Domain.Repositories;
 using TS.Result;
 
-namespace server.Application.Features.Product.DeleteProduct;
+namespace server.Application.Features.Products.DeleteProduct;
 
 internal sealed class DeleteProductByIdHandler(
     IProductRespository respository,
@@ -12,7 +13,7 @@ internal sealed class DeleteProductByIdHandler(
 
     public async Task<Result<string>> Handle(DeleteProductByIdCommand command, CancellationToken cancellationToken)
     {
-        Domain.Entities.Product product = await respository.GetByExpressionAsync(p => p.Id == command.Id, cancellationToken);
+        Product product = await respository.GetByExpressionAsync(p => p.Id == command.Id, cancellationToken);
 
         if (product == null)
         {

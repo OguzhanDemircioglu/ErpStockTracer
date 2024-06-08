@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TS.Result;
 
-namespace server.Application.Features.Product.UpdateProduct;
+namespace server.Application.Features.Products.UpdateProduct;
 
 public sealed record UpdateProductCommand(
     Guid Id,

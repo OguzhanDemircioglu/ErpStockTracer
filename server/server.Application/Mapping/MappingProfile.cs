@@ -3,8 +3,8 @@ using server.Application.Features.Customers.CreateCustomer;
 using server.Application.Features.Customers.UpdateCustomer;
 using server.Application.Features.Depots.CreateDepot;
 using server.Application.Features.Depots.UpdateDepot;
-using server.Application.Features.Product.CreateProduct;
-using server.Application.Features.Product.UpdateProduct;
+using server.Application.Features.Products.CreateProduct;
+using server.Application.Features.Products.UpdateProduct;
 using server.Domain.Entities;
 using server.Domain.Enums;
 

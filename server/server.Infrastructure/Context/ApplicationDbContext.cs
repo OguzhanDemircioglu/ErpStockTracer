@@ -14,7 +14,9 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
 
     public DbSet<Customer> Customers { get; init; }
     public DbSet<Depot> Depots { get; init; }
-    public DbSet<Product> Product { get; init; }
+    public DbSet<Product> Products { get; init; }
+    public DbSet<Recipe> Recipes { get; init; }
+    public DbSet<RecipeDetail> RecipeDetails { get; init; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {

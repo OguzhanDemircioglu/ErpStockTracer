@@ -4,7 +4,7 @@ using server.Domain.Entities;
 
 namespace server.Infrastructure.Configurations;
 
-public class DepotConfiguration: IEntityTypeConfiguration<Depot>
+internal sealed class DepotConfiguration: IEntityTypeConfiguration<Depot>
 {
     public void Configure(EntityTypeBuilder<Depot> builder)
     {

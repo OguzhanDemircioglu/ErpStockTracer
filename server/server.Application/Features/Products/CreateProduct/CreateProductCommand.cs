@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TS.Result;
 
-namespace server.Application.Features.Product.CreateProduct;
+namespace server.Application.Features.Products.CreateProduct;
 
 public sealed record CreateProductCommand(
     string Name,

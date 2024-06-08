@@ -4,7 +4,7 @@ using MediatR;
 using server.Domain.Repositories;
 using TS.Result;
 
-namespace server.Application.Features.Product.UpdateProduct;
+namespace server.Application.Features.Products.UpdateProduct;
 
 public sealed class UpdateProductCommandHandler(
     IProductRespository respository,

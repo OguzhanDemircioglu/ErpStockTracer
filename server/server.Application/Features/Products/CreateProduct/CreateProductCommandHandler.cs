@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using GenericRepository;
 using MediatR;
-using server.Application.Features.Depots.CreateDepot;
 using server.Domain.Entities;
 using server.Domain.Repositories;
 using TS.Result;
 
-namespace server.Application.Features.Product.CreateProduct;
+namespace server.Application.Features.Products.CreateProduct;
 
 public class CreateProductCommandHandler(
     IProductRespository respository,
@@ -23,7 +22,7 @@ public class CreateProductCommandHandler(
             return Result<string>.Failure("Ürün adı önce eklenmiş");
         }
         
-        Domain.Entities.Product product = mapper.Map<Domain.Entities.Product>(request);
+        Product product = mapper.Map<Product>(request);
 
         await respository.AddAsync(product, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

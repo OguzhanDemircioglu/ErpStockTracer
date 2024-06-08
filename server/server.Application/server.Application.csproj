@@ -20,4 +20,8 @@
         <ProjectReference Include="..\server.Domain\server.Domain.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\RecipeDetails\" />
+    </ItemGroup>
+
 </Project>

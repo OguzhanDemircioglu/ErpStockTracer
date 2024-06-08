@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using server.Application.Features.Product.CreateProduct;
-using server.Application.Features.Product.DeleteProduct;
-using server.Application.Features.Product.GetAllProducts;
-using server.Application.Features.Product.UpdateProduct;
+using server.Application.Features.Products.CreateProduct;
+using server.Application.Features.Products.DeleteProduct;
+using server.Application.Features.Products.GetAllProducts;
+using server.Application.Features.Products.UpdateProduct;
 using server.WebAPI.Abstractions;
 
 namespace server.WebAPI.Controllers;
