@@ -8,6 +8,7 @@ import {CustomersComponent} from "./components/customers/customers.component";
 import {DepotsComponent} from "./components/depots/depots.component";
 import {ProductsComponent} from "./components/products/products.component";
 import {RecipesComponent} from "./components/recipes/recipes.component";
+import {RecipeDetailsComponent} from "./components/recipe-details/recipe-details.component";
 
 export const routes: Routes = [
   {
@@ -34,6 +35,9 @@ export const routes: Routes = [
       },{
         path:"Recipes",
         component:RecipesComponent
+      },{
+        path:"RecipeDetails/:id",
+        component:RecipeDetailsComponent
       },
     ]
   }

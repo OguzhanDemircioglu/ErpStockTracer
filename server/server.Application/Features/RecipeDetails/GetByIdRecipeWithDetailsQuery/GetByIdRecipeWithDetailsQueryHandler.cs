@@ -4,7 +4,7 @@ using server.Domain.Entities;
 using server.Domain.Repositories;
 using TS.Result;
 
-namespace server.Application.Features.Recipes.GetByIdRecipeWithDetailsQuery;
+namespace server.Application.Features.RecipeDetails.GetByIdRecipeWithDetailsQuery;
 
 internal sealed class GetByIdRecipeWithDetailsQueryHandler(IRecipeRepository repository)
     : IRequestHandler<GetByIdRecipeWithDetailsQuery, Result<Recipe>>
@@ -16,7 +16,7 @@ internal sealed class GetByIdRecipeWithDetailsQueryHandler(IRecipeRepository rep
             await repository
                 .Where(p => p.Id == request.Id)
                 .Include(p => p.Product)
-                .Include(p => p.Details!)
+                .Include(p => p.Details!.OrderBy(p => p.Product!.Name))
                 .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(cancellationToken);
 

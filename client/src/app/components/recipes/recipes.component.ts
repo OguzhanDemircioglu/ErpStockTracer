@@ -9,8 +9,8 @@ import {HttpService} from "../../services/http.service";
 import {SwalService} from "../../services/swal.service";
 import {RecipeModel} from "../../models/recipe.model";
 import {RecipePipe} from "../../pipes/recipe.pipe";
-import {ProductPipe} from "../../pipes/product.pipe";
-import {RecipeDetail} from "../../models/recipe-detail.model";
+import {RecipeDetailModel} from "../../models/recipe-detail.model";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-recipes',
@@ -22,7 +22,7 @@ import {RecipeDetail} from "../../models/recipe-detail.model";
     FormsModule,
     SectionComponent,
     SharedModule,
-    ProductPipe
+    RouterLink
   ],
   templateUrl: './recipes.component.html',
   styleUrl: './recipes.component.css'
@@ -33,13 +33,12 @@ export class RecipesComponent implements OnInit {
   products: ProductModel[] = [];
   semiProducts: ProductModel[] = [];
 
-  detail = new RecipeDetail();
+  detail = new RecipeDetailModel();
   numbers = Array.from({length: 10}, (_, i) => i + 1);
 
   @ViewChild("createModalCloseBtn") createModalCloseBtn: ElementRef<HTMLButtonElement> | undefined;
 
   createModel: RecipeModel = new RecipeModel();
-  updateModel: RecipeModel = new RecipeModel();
 
   constructor(
     private http: HttpService,
@@ -88,7 +87,7 @@ export class RecipesComponent implements OnInit {
       }
     }
 
-    this.detail = new RecipeDetail();
+    this.detail = new RecipeDetailModel();
   }
 
   removeDetail(index: number) {
@@ -99,7 +98,6 @@ export class RecipesComponent implements OnInit {
     this.http.post<ProductModel[]>("Products/GetAll", {}, (res) => {
       this.semiProducts = res.filter(recipe => recipe.type.value === 2);
       this.products = res.filter(recipe => recipe.type.value === 1);
-
     })
   }
 }

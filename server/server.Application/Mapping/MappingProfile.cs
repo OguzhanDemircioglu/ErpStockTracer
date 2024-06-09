@@ -5,6 +5,8 @@ using server.Application.Features.Depots.CreateDepot;
 using server.Application.Features.Depots.UpdateDepot;
 using server.Application.Features.Products.CreateProduct;
 using server.Application.Features.Products.UpdateProduct;
+using server.Application.Features.RecipeDetails.CreateRecipeDetail;
+using server.Application.Features.RecipeDetails.UpdateRecipeDetail;
 using server.Domain.Entities;
 using server.Domain.Enums;
 
@@ -26,5 +28,7 @@ public sealed class MappingProfile : Profile
         CreateMap<UpdateProductCommand, Product>()
             .ForMember(m => m.Type, opt => opt.MapFrom(x => ProductTypeEnum.FromValue(x.TypeValue)));
             
+        CreateMap<CreateRecipeDetailCommand, RecipeDetail>();
+        CreateMap<UpdateRecipeDetailCommand, RecipeDetail>();
     }
 }
