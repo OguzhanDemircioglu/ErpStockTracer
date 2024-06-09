@@ -31,5 +31,5 @@ public sealed class RecipesController(IMediator mediator) : ApiController(mediat
         var response = await _mediator.Send(request, cancellationToken);
 
         return StatusCode(response.StatusCode, response);
-    }
+    }   
 }

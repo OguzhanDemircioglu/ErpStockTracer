@@ -91,7 +91,7 @@ export class RecipesComponent implements OnInit {
     this.detail = new RecipeDetail();
   }
 
-  removeDetail(index: number){
+  removeDetail(index: number) {
     this.createModel.details.splice(index, 1);
   }
 
