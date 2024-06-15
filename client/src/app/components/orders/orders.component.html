@@ -1,0 +1,309 @@
+<app-blank pageName="Siparişler" [routes]="['Siparişler']">
+  <app-section sectionTitle="Sipariş Listesi">
+    <div class="form-group row">
+      <div class="col-9">
+        <button class="btn btn-dark" data-toggle="modal" data-target="#createModal">
+          <i class="fa-solid fa-plus"></i>
+          Sipariş Ekle
+        </button>
+      </div>
+      <div class="col-3">
+        <input [(ngModel)]="search" type="search" class="form-control" placeholder="Ara">
+      </div>
+    </div>
+    <div class="form-group mt-2">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Sipariş Numarası</th>
+          <th>Tarih</th>
+          <th>Müşteri</th>
+          <th>Durumu</th>
+          <th>Teslim Tarihi</th>
+          <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (order of orders | order:search; track order) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ order.orderPrefix }}</td>
+              <td>{{ order.orderDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ order.customer.name }}</td>
+              <td>{{ order.status.name }}</td>
+              <td>{{ order.deliveryDate | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <button data-toggle="modal" data-target="#updateModal" (click)="get(order)"
+                        class="btn btn-outline-primary btn-sm me-2">
+                  <i class="fa-solid fa-edit"></i>
+                </button>
+                <button (click)="deleteById(order)" class="btn btn-outline-danger btn-sm">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </app-section>
+</app-blank>
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sipariş Ekle</h5>
+        <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form formValidate #createForm="ngForm" (ngSubmit)="create(createForm)">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label>Tarih</label>
+            <input type="date"
+                   class="form-control"
+                   name="orderDate"
+                   [(ngModel)]="createModel.orderDate"
+                   required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group row mt-2">
+            <label>Müşteri</label>
+            <select class="form-control"
+                    name="createModelCustomerId"
+                    [(ngModel)]="createModel.customerId"
+                    required>
+              <option *ngFor="let p of customers"
+                      [ngValue]="p.id">
+                {{ p.name }}
+              </option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group row mt-2">
+            <label>Teslim Tarihi</label>
+            <input type="date"
+                   class="form-control"
+                   name="deliveryDate"
+                   [(ngModel)]="createModel.deliveryDate"
+                   required>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <hr>
+
+          <div class="form-group mt-2">
+            <div class="row">
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Ürün</label>
+                  <select class="form-control" [(ngModel)]="createDetail.productId"
+                          [ngModelOptions]="{standalone:true}">
+                    @for (product of products; track product) {
+                      <option [value]="product.id">{{ product.name }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Birim Adeti</label>
+                  <select class="form-control"
+                          name="detailProductQuantity"
+                          [(ngModel)]="createDetail.quantity"
+                          [ngModelOptions]="{standalone:true}">
+                    <option *ngFor="let number of numbers" [ngValue]="number">{{ number }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Birim Fiyatı</label>
+                  <input class="form-control" type="number" [(ngModel)]="createDetail.price"
+                         [ngModelOptions]="{standalone:true}">
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Toplam</label>
+                  <br>
+                  <label>{{ (createDetail.price * createDetail.quantity) | currency:'₺': true }}</label>
+                </div>
+              </div>
+              <div class="col-12 mt-2">
+                <button type="button" class="btn btn-dark" (click)="addDetail()">Ekle</button>
+              </div>
+            </div>
+            <div class="mt-2">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Ürün Adı</th>
+                  <th>Adedi</th>
+                  <th>Birim Fiyatı</th>
+                  <th>Toplam</th>
+                  <th>İşlemler</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for (data of createModel.details; track data) {
+                    <tr>
+                      <td>{{ $index + 1 }}</td>
+                      <td>{{ data.product.name }}</td>
+                      <td>{{ data.quantity }}</td>
+                      <td>{{ data.price | currency:'₺': true }}</td>
+                      <td>{{ (data.price * data.quantity) | currency:'₺': true }}</td>
+                      <td>
+                        <button (click)="removeDetail($index)" class="btn btn-outline-danger btn-sm">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-dark w-100">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sipariş Güncelle</h5>
+        <button type="button" #updateModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form formValidate #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label>Tarih</label>
+            <input type="date"
+                   class="form-control"
+                   name="updateModelorderDate"
+                   [(ngModel)]="updateModel.orderDate"
+                   required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group row mt-2">
+            <label>Müşteri</label>
+            <select class="form-control"
+                    name="updateModelCustomerId"
+                    [(ngModel)]="updateModel.customerId"
+                    required>
+              <option *ngFor="let p of customers"
+                      [ngValue]="p.id">
+                {{ p.name }}
+              </option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group row mt-2">
+            <label>Teslim Tarihi</label>
+            <input type="date"
+                   class="form-control"
+                   name="updateModeldeliveryDate"
+                   [(ngModel)]="updateModel.deliveryDate"
+                   required>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <hr>
+
+          <div class="form-group mt-2">
+            <div class="row">
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Ürün</label>
+                  <select class="form-control"
+                          [(ngModel)]="updateDetail.productId"
+                          [ngModelOptions]="{standalone:true}">
+                    @for (product of products; track product) {
+                      <option [value]="product.id">{{ product.name }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Birim Adeti</label>
+                  <select class="form-control"
+                          name="uctQuantity"
+                          [(ngModel)]="updateDetail.quantity"
+                          [ngModelOptions]="{standalone:true}">
+                    <option *ngFor="let number of numbers" [ngValue]="number">{{ number }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Birim Fiyatı</label>
+                  <input class="form-control" type="number" [(ngModel)]="updateDetail.price"
+                         [ngModelOptions]="{standalone:true}">
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Toplam</label>
+                  <br>
+                  <label>{{ (updateDetail.price * updateDetail.quantity) | currency:'₺': true }}</label>
+                </div>
+              </div>
+              <div class="col-12 mt-2">
+                <button type="button" class="btn btn-dark" (click)="addUpdateDetail()">Ekle</button>
+              </div>
+            </div>
+            <div class="mt-2">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Ürün Adı</th>
+                  <th>Adedi</th>
+                  <th>Birim Fiyatı</th>
+                  <th>Toplam</th>
+                  <th>İşlemler</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for (data of updateModel.details; track data) {
+                    <tr>
+                      <td>{{ $index + 1 }}</td>
+                      <td>{{ data.product.name }}</td>
+                      <td>{{ data.quantity }}</td>
+                      <td>{{ data.price | currency:'₺': true }}</td>
+                      <td>{{ (data.price * data.quantity) | currency:'₺': true }}</td>
+                      <td>
+                        <button (click)="removeUpdateDetail($index)" class="btn btn-outline-danger btn-sm">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-primary">Güncelle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

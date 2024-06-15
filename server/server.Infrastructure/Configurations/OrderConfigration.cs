@@ -9,8 +9,7 @@ public sealed class OrderConfigration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
-        builder.Property(p => p.OrderNumber).HasColumnType("varchar(16)");
-        builder.Property(p => p.Status)
+       builder.Property(p => p.Status)
             .HasConversion(s => s.Value, value => OrderStatusEnum.FromValue(value));
     }
 }

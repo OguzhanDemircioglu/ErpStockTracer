@@ -23,26 +23,9 @@ internal sealed class CreateOrderCommandHandler(
     int lastOrderNumber = 0;
     if (lastOrder is not null) lastOrderNumber = lastOrder.OrderNumber;
 
-    /*List<OrderDetail> Details = request.Details.Select(s => new OrderDetail
-    {
-      ProductId = s.ProductId,
-      Quantity = s.Quantity,
-      Price = s.Price
-    }).ToList();
-
-    Order order = new()
-    {
-      CustomerId = request.CustomerId,
-      DeliveryDate = request.DeliveryDate,
-      OrderDate = request.OrderDate,
-      OrderNumber = lastOrderNumber++,
-      OrderNumberYear = request.OrderDate.Year,
-      Details = Details
-    };*/
-
     Order order = mapper.Map<Order>(request);
     order.OrderNumberYear = request.OrderDate.Year;
-    order.OrderNumber = lastOrderNumber++;
+    order.OrderNumber = lastOrderNumber + 1;
 
     await repository.AddAsync(order, cancellationToken);
     await unitOfWork.SaveChangesAsync(cancellationToken);
