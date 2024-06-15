@@ -1,0 +1,133 @@
+<app-blank pageName="Ürün" [routes]="['Products']">
+  <app-section sectionTitle="Ürün Listesi">
+    <div class="form-group row">
+      <div class="col-9">
+        <button class="btn btn-dark" data-toggle="modal" data-target="#createModal">
+          <i class="fa-solid fa-plus"></i>
+          Ürün Ekle
+        </button>
+      </div>
+      <div class="col-3">
+        <input [(ngModel)]="search" type="search" class="form-control" placeholder="Ara">
+      </div>
+    </div>
+    <div class="form-group mt-2">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Ürün Adı</th>
+          <th>Ürün Tipi</th>
+          <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (customer of products | product:search; track customer) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.type.name }}</td>
+              <td>
+                <button data-toggle="modal" data-target="#updateModal" (click)="get(customer)"
+                        class="btn btn-outline-primary btn-sm me-2">
+                  <i class="fa-solid fa-edit"></i>
+                </button>
+                <button (click)="deleteById(customer)" class="btn btn-outline-danger btn-sm">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </app-section>
+</app-blank>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ürün Ekle</h5>
+        <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form formValidate #createForm="ngForm" (ngSubmit)="create(createForm)">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label>Ürün Adı</label>
+            <input type="text"
+                   class="form-control"
+                   name="name"
+                   [(ngModel)]="createModel.name"
+                   minlength="3" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Ürün Tipi</label>
+                <select class="form-select"
+                        name="createType"
+                        [(ngModel)]="createModel.typeValue"
+                        required>
+                  <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-dark">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ürün Güncelle</h5>
+        <button type="button" #updateModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form formValidate #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label>Ürün Adı</label>
+            <input type="text"
+                   class="form-control"
+                   name="updatename"
+                   [(ngModel)]="updateModel.name"
+                   minlength="3" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Ürün Tipi</label>
+                <select class="form-select"
+                        name="updateType"
+                        [(ngModel)]="updateModel.typeValue"
+                        required>
+                  <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-primary">Güncelle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,43 @@
-<p>login works!</p>
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <a href="../../index2.html" class="h1"><b>Ofluoğlu</b>ERP</a>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="input-group mb-3">
+            <input [(ngModel)]="model.emailOrUserName"
+                   class="form-control"
+                   placeholder="Email Or Username"
+                   name="emailOrUsername">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input [(ngModel)]="model.password"
+                   type="password"
+                   class="form-control"
+                   placeholder="Password"
+                   name="password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <button (click)="login()" class="btn btn-primary btn-block">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+</div>

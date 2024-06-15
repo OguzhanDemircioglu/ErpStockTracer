@@ -6,12 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace server.Infrastructure.Context;
 
-internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
+public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }
 
+    public DbSet<Customer> Customers { get; init; }
+    public DbSet<Depot> Depots { get; init; }
+    public DbSet<Product> Products { get; init; }
+    public DbSet<Recipe> Recipes { get; init; }
+    public DbSet<RecipeDetail> RecipeDetails { get; init; }
+    public DbSet<Order> Orders { get; init; }
+    public DbSet<OrderDetail> OrderDetails { get; init; }
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(typeof(DependencyInjection).Assembly);

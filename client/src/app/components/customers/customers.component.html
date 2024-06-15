@@ -1,0 +1,236 @@
+<app-blank pageName="Müşteriler" [routes]="['Müşteriler']">
+  <app-section sectionTitle="Müşteri Listesi">
+    <div class="form-group row">
+      <div class="col-9">
+        <button class="btn btn-dark" data-toggle="modal" data-target="#createModal">
+          <i class="fa-solid fa-plus"></i>
+          Müşteri Ekle
+        </button>
+      </div>
+
+      <div class="col-3">
+        <input [(ngModel)]="search" type="search" class="form-control" placeholder="Ara">
+      </div>
+    </div>
+
+    <div class="form-group mt-2">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Müşteri Adı</th>
+          <th>Vergi Dairesi</th>
+          <th>Vergi Numarası</th>
+          <th>Şehir</th>
+          <th>İlçe</th>
+          <th>Açık Adres</th>
+          <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (customer of customers | customer:search; track customer) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.taxDepartment }}</td>
+              <td>{{ customer.taxNumber }}</td>
+              <td>{{ customer.city }}</td>
+              <td>{{ customer.town }}</td>
+              <td>{{ customer.fullAdress }}</td>
+              <td>
+                <button data-toggle="modal" data-target="#updateModal" (click)="get(customer)" class="btn btn-outline-primary btn-sm me-2">
+                  <i class="fa-solid fa-edit"></i>
+                </button>
+                <button (click)="deleteById(customer)" class="btn btn-outline-danger btn-sm">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </app-section>
+</app-blank>
+
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Müşteri Ekle</h5>
+        <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <form formValidate #createForm="ngForm" (ngSubmit)="create(createForm)">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label>Müşteri Adı</label>
+            <input type="text"
+                   class="form-control"
+                   name="name"
+                   [(ngModel)]="createModel.name"
+                   minlength="3" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Vergi Dairesi</label>
+                <input type="text"
+                       class="form-control"
+                       name="taxDepartment"
+                       [(ngModel)]="createModel.taxDepartment"
+                       minlength="3" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>Vergi Numarası</label>
+                <input type="text"
+                       class="form-control"
+                       name="taxNumber"
+                       [(ngModel)]="createModel.taxNumber"
+                       minlength="3" maxlength="11" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Şehir</label>
+                <input type="text"
+                       class="form-control"
+                       name="city"
+                       [(ngModel)]="createModel.city"
+                       minlength="2" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>İlçe</label>
+                <input type="text"
+                       class="form-control"
+                       name="town"
+                       [(ngModel)]="createModel.town"
+                       minlength="2" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label>Adres</label>
+            <textarea type="text"
+                      class="form-control"
+                      name="fullAddress"
+                      [(ngModel)]="createModel.fullAdress"
+                      rows="5"
+                      required></textarea>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-dark">Kaydet</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Müşteri Güncelle</h5>
+        <button type="button" #updateModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal"
+                aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <form formValidate #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label>Müşteri Adı</label>
+            <input type="text"
+                   class="form-control"
+                   name="updatename"
+                   [(ngModel)]="updateModel.name"
+                   minlength="3" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Vergi Dairesi</label>
+                <input type="text"
+                       class="form-control"
+                       name="updatetaxDepartment"
+                       [(ngModel)]="updateModel.taxDepartment"
+                       minlength="3" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>Vergi Numarası</label>
+                <input type="text"
+                       class="form-control"
+                       name="updatetaxNumber"
+                       [(ngModel)]="updateModel.taxNumber"
+                       minlength="3" maxlength="11" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2 row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Şehir</label>
+                <input type="text"
+                       class="form-control"
+                       name="updatecity"
+                       [(ngModel)]="updateModel.city"
+                       minlength="2" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>İlçe</label>
+                <input type="text"
+                       class="form-control"
+                       name="updatetown"
+                       [(ngModel)]="updateModel.town"
+                       minlength="2" required>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label>Adres</label>
+            <textarea type="text"
+                      class="form-control"
+                      name="updatefullAddress"
+                      [(ngModel)]="updateModel.fullAdress"
+                      rows="5"
+                      required></textarea>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-primary">Güncelle</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
