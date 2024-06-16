@@ -21,14 +21,6 @@ internal sealed class CreateCustomerCommandHandler(
         {
             return Result<string>.Failure("Müşteri Bulunamadı");
         }
-
-        bool isTaxNumberExist = await customerRepository.AnyAsync(p => p.TaxNumber == request.TaxNumber,
-            cancellationToken);
-
-        if (isTaxNumberExist)
-        {
-            return Result<string>.Failure("Vergi Numarası Zaten Mevcut");
-        }
         
         mapper.Map(request, customer);
 

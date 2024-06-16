@@ -38,7 +38,8 @@
               <td>{{ customer.town }}</td>
               <td>{{ customer.fullAdress }}</td>
               <td>
-                <button data-toggle="modal" data-target="#updateModal" (click)="get(customer)" class="btn btn-outline-primary btn-sm me-2">
+                <button data-toggle="modal" data-target="#updateModal" (click)="get(customer)"
+                        class="btn btn-outline-primary btn-sm me-2">
                   <i class="fa-solid fa-edit"></i>
                 </button>
                 <button (click)="deleteById(customer)" class="btn btn-outline-danger btn-sm">
@@ -83,7 +84,9 @@
                        class="form-control"
                        name="taxDepartment"
                        [(ngModel)]="createModel.taxDepartment"
-                       minlength="3" required>
+                       minlength="10"
+                       maxlength="11"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -94,7 +97,9 @@
                        class="form-control"
                        name="taxNumber"
                        [(ngModel)]="createModel.taxNumber"
-                       minlength="3" maxlength="11" required>
+                       minlength="10"
+                       maxlength="11"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -107,7 +112,8 @@
                        class="form-control"
                        name="city"
                        [(ngModel)]="createModel.city"
-                       minlength="2" required>
+                       minlength="3"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -118,7 +124,8 @@
                        class="form-control"
                        name="town"
                        [(ngModel)]="createModel.town"
-                       minlength="2" required>
+                       minlength="2"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -174,7 +181,9 @@
                        class="form-control"
                        name="updatetaxDepartment"
                        [(ngModel)]="updateModel.taxDepartment"
-                       minlength="3" required>
+                       minlength="10"
+                       maxlength="11"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -185,7 +194,9 @@
                        class="form-control"
                        name="updatetaxNumber"
                        [(ngModel)]="updateModel.taxNumber"
-                       minlength="3" maxlength="11" required>
+                       minlength="10"
+                       maxlength="11"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -198,7 +209,8 @@
                        class="form-control"
                        name="updatecity"
                        [(ngModel)]="updateModel.city"
-                       minlength="2" required>
+                       minlength="2"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -209,7 +221,8 @@
                        class="form-control"
                        name="updatetown"
                        [(ngModel)]="updateModel.town"
-                       minlength="2" required>
+                       minlength="2"
+                       required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
