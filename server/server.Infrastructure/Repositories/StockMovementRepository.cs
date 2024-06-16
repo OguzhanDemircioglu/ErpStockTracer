@@ -5,5 +5,5 @@ using server.Infrastructure.Context;
 
 namespace server.Infrastructure.Repositories;
 
-internal sealed class ProductRepository(ApplicationDbContext context)
-    : Repository<Product,ApplicationDbContext>(context), IProductRepository;
+internal sealed class StockMovementRepository(ApplicationDbContext context)
+  : Repository<StockMovement, ApplicationDbContext>(context), IStockMovementRepository;

@@ -8,13 +8,13 @@ using TS.Result;
 namespace server.Application.Features.Products.CreateProduct;
 
 public class CreateProductCommandHandler(
-    IProductRespository respository,
+    IProductRepository repository,
     IUnitOfWork unitOfWork,
     IMapper mapper) : IRequestHandler<CreateProductCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        bool isExist = await respository.AnyAsync(p=>p.Name.Equals(request.Name),
+        bool isExist = await repository.AnyAsync(p=>p.Name.Equals(request.Name),
             cancellationToken);
 
         if (isExist)
@@ -24,7 +24,7 @@ public class CreateProductCommandHandler(
         
         Product product = mapper.Map<Product>(request);
 
-        await respository.AddAsync(product, cancellationToken);
+        await repository.AddAsync(product, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return "Ürün Başarıyla Eklendi";

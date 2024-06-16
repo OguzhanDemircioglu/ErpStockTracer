@@ -7,20 +7,20 @@ using TS.Result;
 namespace server.Application.Features.Products.UpdateProduct;
 
 public sealed class UpdateProductCommandHandler(
-    IProductRespository respository,
+    IProductRepository repository,
     IUnitOfWork unitOfWork,
     IMapper mapper): IRequestHandler<UpdateProductCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        Domain.Entities.Product product = await respository.GetByExpressionWithTrackingAsync(p => p.Id == request.Id, cancellationToken);
+        Domain.Entities.Product product = await repository.GetByExpressionWithTrackingAsync(p => p.Id == request.Id, cancellationToken);
         
         if (product == null)
         {
             return Result<string>.Failure("Product bulunamadı");
         }
         
-        bool isExist = await respository.AnyAsync(p=>p.Name.Equals(request.Name),
+        bool isExist = await repository.AnyAsync(p=>p.Name.Equals(request.Name),
             cancellationToken);
 
         if (isExist)
