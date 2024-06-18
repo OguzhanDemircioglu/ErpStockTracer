@@ -29,7 +29,7 @@ import {ProductPipe} from "../../pipes/product.pipe";
   styleUrl: './recipe-details.component.css'
 })
 export class RecipeDetailsComponent implements OnInit {
-  recipeDetails: RecipeDetailModel[] = [];
+
   recipe: RecipeModel = new RecipeModel();
   recipeId: string = "";
   products: ProductModel[] = []

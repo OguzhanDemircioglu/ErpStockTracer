@@ -42,7 +42,8 @@ export const routes: Routes = [
         component: RecipesComponent
       }, {
         path: "RecipeDetails/:id",
-        component: RecipeDetailsComponent
+        component: RecipeDetailsComponent,
+        canActivate: [() => inject(AuthService).isAuthenticated()]
       }, {
         path: "Orders",
         component: OrdersComponent
