@@ -6,12 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace server.Infrastructure.Context;
 
-public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
+public sealed class ApplicationDbContext(DbContextOptions options)
+    : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>(options), IUnitOfWork
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
-    {
-    }
-
     public DbSet<Customer> Customers { get; init; }
     public DbSet<Depot> Depots { get; init; }
     public DbSet<Product> Products { get; init; }
@@ -19,6 +16,8 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
     public DbSet<RecipeDetail> RecipeDetails { get; init; }
     public DbSet<Order> Orders { get; init; }
     public DbSet<OrderDetail> OrderDetails { get; init; }
+    public DbSet<Invoice> Invoices { get; init; }
+    public DbSet<InvoiceDetail> InvoiceDetails { get; init; }
     public DbSet<StockMovement> StockMovements { get; init; }
     
     protected override void OnModelCreating(ModelBuilder builder)
