@@ -8,41 +8,37 @@ using server.WebAPI.Abstractions;
 
 namespace server.WebAPI.Controllers;
 
-public sealed class DepotsController: ApiController
+public sealed class DepotsController(IMediator mediator) : ApiController(mediator)
 {
-    public DepotsController(IMediator mediator) : base(mediator)
-    {
-    }
-
     [HttpPost]
     public async Task<IActionResult> GetAll(GetAllDepotQuery request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
-        
+
         return StatusCode(response.StatusCode, response);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateDepotCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
-        
+
         return StatusCode(response.StatusCode, response);
-    }    
-    
+    }
+
     [HttpPost]
     public async Task<IActionResult> DeleteById(DeleteDepotByIdCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
-        
+
         return StatusCode(response.StatusCode, response);
-    }    
-    
+    }
+
     [HttpPost]
     public async Task<IActionResult> Update(UpdateDepotCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
-        
+
         return StatusCode(response.StatusCode, response);
     }
 }

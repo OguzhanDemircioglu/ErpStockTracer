@@ -4,6 +4,7 @@ using server.Application.Features.Customers.UpdateCustomer;
 using server.Application.Features.Depots.CreateDepot;
 using server.Application.Features.Depots.UpdateDepot;
 using server.Application.Features.Invoices.CreateInvoice;
+using server.Application.Features.Invoices.UpdateInvoice;
 using server.Application.Features.Orders.CreateOrder;
 using server.Application.Features.Orders.UpdateOrder;
 using server.Application.Features.Products.CreateProduct;
@@ -45,13 +46,18 @@ public sealed class MappingProfile : Profile
 
         CreateMap<CreateInvoiceCommand, Invoice>()
             .ForMember(m => m.Type, options =>
-                options.MapFrom(p => InvoiceTypeEnum.FromValue(p.InvoiceType)))
+                options.MapFrom(p => InvoiceTypeEnum.FromValue(p.TypeValue)))
             .ForMember(m => m.Details,
                 options => options
                     .MapFrom(p => p.Details
                         .Select(s => new InvoiceDetail()
                             { Price = s.Price, ProductId = s.ProductId, Quantity = s.Quantity })));
 
+        CreateMap<UpdateInvoiceCommand, Invoice>()
+            .ForMember(member =>
+                    member.Details,
+                options => options.Ignore());
+        
         CreateMap<UpdateOrderCommand, Order>()
             .ForMember(member =>
                     member.Details,

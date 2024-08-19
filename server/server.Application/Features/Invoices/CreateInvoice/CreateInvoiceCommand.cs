@@ -6,7 +6,8 @@ namespace server.Application.Features.Invoices.CreateInvoice;
 
 public record CreateInvoiceCommand(
     Guid CustomerId,
-    int InvoiceType,
-    DateOnly OrderDate,
+    int TypeValue,
+    DateOnly Date,
     string InvoiceNumber,
-    List<InvoiceDetailDto> Details) : IRequest<Result<string>>;
+    List<InvoiceDetailDto> Details,
+    Guid? OrderId) : IRequest<Result<string>>;
