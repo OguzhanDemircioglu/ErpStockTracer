@@ -4,7 +4,7 @@ using TS.Result;
 
 namespace server.Application.Features.Invoices.CreateInvoice;
 
-public record CreateInvoiceCommand(
+public sealed record CreateInvoiceCommand(
     Guid CustomerId,
     int TypeValue,
     DateOnly Date,

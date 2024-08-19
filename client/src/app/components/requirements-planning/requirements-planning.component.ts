@@ -16,19 +16,18 @@ export class RequirementsPlanningComponent {
   orderId!: string;
 
   constructor(
-    private http: HttpService,
-    private activated: ActivatedRoute
+    private activated: ActivatedRoute,
+    private http: HttpService
   ) {
     this.activated.params.subscribe(res => {
-      this.orderId = res['id'];
-      this.getPlanning();
+      this.orderId = res["id"];
+      this.get();
     });
   }
 
-  getPlanning() {
-    this.http.post<RequirementsPlanningModel>("Orders/RequirementsPlanningByOrderIdCommand", {orderId: this.orderId}, (res) => {
-      this.data = res
-    })
+  get() {
+    this.http.post<RequirementsPlanningModel>("Orders/RequirementsPlanningByOrderId", {orderId: this.orderId}, res => {
+      this.data = res;
+    });
   }
-
 }

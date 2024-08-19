@@ -43,15 +43,19 @@ public sealed class MappingProfile : Profile
                     .MapFrom(p => p.Details
                         .Select(s => new OrderDetail
                             { Price = s.Price, ProductId = s.ProductId, Quantity = s.Quantity })));
-
+        
         CreateMap<CreateInvoiceCommand, Invoice>()
-            .ForMember(m => m.Type, options =>
-                options.MapFrom(p => InvoiceTypeEnum.FromValue(p.TypeValue)))
-            .ForMember(m => m.Details,
-                options => options
-                    .MapFrom(p => p.Details
-                        .Select(s => new InvoiceDetail()
-                            { Price = s.Price, ProductId = s.ProductId, Quantity = s.Quantity })));
+            .ForMember(member => member.Type, options => 
+                options.MapFrom(p=> InvoiceTypeEnum.FromValue(p.TypeValue)))
+            .ForMember(member => member.Details,
+                options =>
+                    options.MapFrom(p => p.Details.Select(s => new InvoiceDetail
+                    {
+                        Price = s.Price,
+                        ProductId = s.ProductId,
+                        DepotId = s.DepotId,
+                        Quantity = s.Quantity
+                    }).ToList()));
 
         CreateMap<UpdateInvoiceCommand, Invoice>()
             .ForMember(member =>

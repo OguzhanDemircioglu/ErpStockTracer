@@ -12,7 +12,7 @@ using server.Infrastructure.Context;
 namespace server.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240815194534_mg10")]
+    [Migration("20240819152429_mg10")]
     partial class mg10
     {
         /// <inheritdoc />
@@ -190,7 +190,7 @@ namespace server.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Type")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -206,6 +206,9 @@ namespace server.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("DepotId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uniqueidentifier");
 
@@ -219,6 +222,8 @@ namespace server.Infrastructure.Migrations
                         .HasColumnType("decimal(7,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepotId");
 
                     b.HasIndex("InvoiceId");
 
@@ -389,6 +394,12 @@ namespace server.Infrastructure.Migrations
 
             modelBuilder.Entity("server.Domain.Entities.InvoiceDetail", b =>
                 {
+                    b.HasOne("server.Domain.Entities.Depot", "Depot")
+                        .WithMany()
+                        .HasForeignKey("DepotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("server.Domain.Entities.Invoice", null)
                         .WithMany("Details")
                         .HasForeignKey("InvoiceId")
@@ -400,6 +411,8 @@ namespace server.Infrastructure.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Depot");
 
                     b.Navigation("Product");
                 });

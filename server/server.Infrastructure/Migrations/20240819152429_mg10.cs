@@ -25,7 +25,7 @@ namespace server.Infrastructure.Migrations
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: true)
+                    Type = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,12 +45,19 @@ namespace server.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InvoiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DepotId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     Price = table.Column<decimal>(type: "money", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InvoiceDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InvoiceDetails_Depots_DepotId",
+                        column: x => x.DepotId,
+                        principalTable: "Depots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoiceDetails_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
@@ -68,6 +75,11 @@ namespace server.Infrastructure.Migrations
                 name: "IX_StockMovements_InvoiceId",
                 table: "StockMovements",
                 column: "InvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetails_DepotId",
+                table: "InvoiceDetails",
+                column: "DepotId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceDetails_InvoiceId",

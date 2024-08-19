@@ -19,9 +19,9 @@ internal sealed class UpdateInvoiceCommandHandler(
     {
         Invoice? invoice =
             await invoiceRepository
-                .WhereWithTracking(p => p.Id == request.Id)
-                .Include(p => p.Details)
-                .FirstOrDefaultAsync(cancellationToken);
+            .WhereWithTracking(p => p.Id == request.Id)
+            .Include(p=> p.Details)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (invoice is null)
         {
@@ -30,12 +30,12 @@ internal sealed class UpdateInvoiceCommandHandler(
 
         List<StockMovement> movements =
             await stockMovementRepository
-                .Where(p => p.InvoiceId == invoice.Id)
-                .ToListAsync(cancellationToken);
+            .Where(p => p.InvoiceId == invoice.Id)
+            .ToListAsync(cancellationToken);
 
         stockMovementRepository.DeleteRange(movements);
 
-        invoiceDetailRepository.DeleteRange(invoice.Details);
+        invoiceDetailRepository.DeleteRange(invoice.Details);        
 
         invoice.Details = request.Details.Select(s => new InvoiceDetail
         {
@@ -56,7 +56,7 @@ internal sealed class UpdateInvoiceCommandHandler(
             StockMovement movement = new()
             {
                 InvoiceId = invoice.Id,
-                NumberOfInputs = invoice.Type!.Value == 1 ? item.Quantity : 0,
+                NumberOfInputs = invoice.Type.Value == 1 ? item.Quantity : 0,
                 NumberOfOutputs = invoice.Type.Value == 2 ? item.Quantity : 0,
                 DepotId = item.DepotId,
                 Price = item.Price,
@@ -66,7 +66,7 @@ internal sealed class UpdateInvoiceCommandHandler(
             newMovements.Add(movement);
         }
 
-        await stockMovementRepository.AddRangeAsync(newMovements, cancellationToken);
+        await stockMovementRepository.AddRangeAsync(newMovements, cancellationToken);        
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
