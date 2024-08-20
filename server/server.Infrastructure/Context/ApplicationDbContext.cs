@@ -19,6 +19,7 @@ public sealed class ApplicationDbContext(DbContextOptions options)
     public DbSet<Invoice> Invoices { get; init; }
     public DbSet<InvoiceDetail> InvoiceDetails { get; init; }
     public DbSet<StockMovement> StockMovements { get; init; }
+    public DbSet<Production> Productions { get; init; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {

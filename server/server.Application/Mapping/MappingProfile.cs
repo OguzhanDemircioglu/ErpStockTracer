@@ -7,6 +7,7 @@ using server.Application.Features.Invoices.CreateInvoice;
 using server.Application.Features.Invoices.UpdateInvoice;
 using server.Application.Features.Orders.CreateOrder;
 using server.Application.Features.Orders.UpdateOrder;
+using server.Application.Features.Productions.CreateProduction;
 using server.Application.Features.Products.CreateProduct;
 using server.Application.Features.Products.UpdateProduct;
 using server.Application.Features.RecipeDetails.CreateRecipeDetail;
@@ -66,5 +67,7 @@ public sealed class MappingProfile : Profile
             .ForMember(member =>
                     member.Details,
                 options => options.Ignore());
+        
+        CreateMap<CreateProductionCommand, Production>();
     }
 }
