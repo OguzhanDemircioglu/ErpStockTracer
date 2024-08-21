@@ -12,6 +12,8 @@ internal sealed class GetAllProductionsQueryHandler(
     public async Task<Result<List<Production>>> Handle(GetAllProductionsQuery request, CancellationToken cancellationToken)
     {
         List<Production> orders = await repository.GetAll()
+            .Include(p=> p.Product)
+            .Include(z=> z.Depot)
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync(cancellationToken);
         
